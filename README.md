@@ -1,2 +1,2 @@
-# archer
+# Archer
 Archer - HTTP REST Orchestrator
