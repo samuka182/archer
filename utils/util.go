@@ -26,7 +26,6 @@ func StringToInt(str string) int {
 //
 //		printMap(object.Value)
 //	}
-//TEste
 
 func printArray(array []map[string]interface{}) {
 	for _, obj := range array {
