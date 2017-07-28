@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	u "net/url"
 	"regexp"
 	"strings"
 	"time"
@@ -14,12 +15,11 @@ import (
 //Request ...
 func Request(request *structs.Request) (r *structs.Response, err error) {
 
-	url := getURL(request)
 	client := &http.Client{}
 	response := &structs.Response{}
 
 	startTime := time.Now()
-	req, err := http.NewRequest(request.Method, url, bytes.NewBufferString(request.Payload))
+	req, err := http.NewRequest(request.Method, getURL(request), bytes.NewBufferString(request.Payload))
 	setHEADERS(request, req)
 
 	resp, err := client.Do(req)
@@ -31,13 +31,21 @@ func Request(request *structs.Request) (r *structs.Response, err error) {
 	return response, err
 }
 
-func getURL(request *structs.Request) (url string) {
-	url = request.URL
+func getURL(request *structs.Request) (urlString string) {
 
+	url := request.URL
 	for i := 0; i < len(request.Path); i++ {
 		path := request.Path[i]
 		re := regexp.MustCompile("{" + path.Key + "}")
-		url = re.ReplaceAllString(url, path.Value)
+		url = re.ReplaceAllString(url, u.QueryEscape(path.Value))
+	}
+
+	if len(request.QueryString) > 0 {
+		parameters := u.Values{}
+		for _, query := range request.QueryString {
+			parameters.Add(query.Key, query.Value)
+		}
+		url += "?" + parameters.Encode()
 	}
 
 	return url

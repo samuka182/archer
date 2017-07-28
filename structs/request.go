@@ -11,6 +11,10 @@ type Request struct {
 		Key   string `json:"key"`
 		Value string `json:"value"`
 	} `json:"header"`
+	QueryString []struct {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	} `json:"query-string"`
 	URL     string `json:"url"`
 	Payload string `json:"payload"`
 }

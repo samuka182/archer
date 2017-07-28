@@ -7,11 +7,11 @@ import (
 
 //Response represents a response of request
 type Response struct {
-	Headers        []Header `json:"headers"`
-	HTTPStatus     string   `json:"http-status"`
-	HTTPStatusCode int      `json:"http-status-code"`
-	Payload        string   `json:"payload"`
-	ExecutionTime  string   `json:"response-time"`
+	Headers        []Header `json:"headers,omitempty"`
+	HTTPStatus     string   `json:"http-status,omitempty"`
+	HTTPStatusCode int      `json:"http-status-code,omitempty"`
+	Payload        string   `json:"payload,omitempty"`
+	ExecutionTime  string   `json:"response-time,omitempty"`
 }
 
 //Header represents a http header
