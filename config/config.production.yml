@@ -1,0 +1,4 @@
+appname: archer
+
+db:
+  local: mongodb://localhost 

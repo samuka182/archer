@@ -3,21 +3,26 @@ package structs
 import (
 	"encoding/json"
 	"strings"
+	"time"
+
+	"gopkg.in/mgo.v2/bson"
 )
 
 //Response represents a response of request
 type Response struct {
-	Headers        []Header `json:"headers,omitempty"`
-	HTTPStatus     string   `json:"http-status,omitempty"`
-	HTTPStatusCode int      `json:"http-status-code,omitempty"`
-	Payload        string   `json:"payload,omitempty"`
-	ExecutionTime  string   `json:"response-time,omitempty"`
+	ID             bson.ObjectId `json:"-" bson:"_id"`
+	Timestamp      time.Time     `json:"-" bson:"_timestamp"`
+	Headers        []Header      `json:"headers,omitempty" bson:"headers"`
+	HTTPStatus     string        `json:"http-status,omitempty" bson:"http-status"`
+	HTTPStatusCode int           `json:"http-status-code,omitempty" bson:"http-status-code"`
+	Payload        string        `json:"payload,omitempty" bson:"payload"`
+	ExecutionTime  string        `json:"response-time,omitempty" bson:"response-time"`
 }
 
 //Header represents a http header
 type Header struct {
-	Chave string `json:"key"`
-	Valor string `json:"value"`
+	Chave string `json:"key" bson:"key"`
+	Valor string `json:"value" bson:"value"`
 }
 
 //PayloadIsArray ...
