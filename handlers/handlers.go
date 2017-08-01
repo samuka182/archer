@@ -34,12 +34,11 @@ func FullRequest(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	FullDispatch(w, resp, err)
+	fullDispatch(w, resp, err)
 
 }
 
-//FullDispatch ...
-func FullDispatch(w http.ResponseWriter, resp *structs.Response, err error) {
+func fullDispatch(w http.ResponseWriter, resp *structs.Response, err error) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	enc := json.NewEncoder(w)
@@ -52,4 +51,17 @@ func FullDispatch(w http.ResponseWriter, resp *structs.Response, err error) {
 	resp.Timestamp = time.Now()
 
 	db.Save("responses", resp)
+}
+
+//GetTest ...
+func GetTest(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	enc := json.NewEncoder(w)
+	err := enc.Encode(&map[string]string{"nome": "teste"})
+	if err != nil {
+		panic(err)
+	}
+
 }

@@ -1,38 +1,27 @@
 package config
 
-import "archer/structs"
-
-//Config ...
-type Config struct {
-	APPName string
-
-	DB struct {
-		Name  string `default:"archerdb"`
-		Local string `default:"mongodb://localhost"`
-	}
-}
+import (
+	"archer/structs"
+)
 
 // New initialize a Configor
-func New(config *structs.Config) *structs.Configurator {
-	if config == nil {
-		config = &structs.Config{}
-	}
-	return &structs.Configurator{Config: config}
+func New() *structs.Configurator {
+	return &structs.Configurator{}
 }
 
 // ENV return environment
 func ENV() string {
-	return New(nil).GetEnvironment()
+	return New().GetEnvironment()
 }
 
 // Load will unmarshal configurations to struct from files that you provide
-func Load(config interface{}, files string) error {
-	return New(nil).Load(config, files)
+func Load(config *structs.Config, files string) error {
+	return New().Load(config, files)
 }
 
 //Get ...
-func Get() *Config {
-	var conf = &Config{}
+func Get() *structs.Config {
+	var conf = &structs.Config{}
 	Load(conf, "config.yml")
 
 	return conf

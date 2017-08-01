@@ -61,7 +61,6 @@ func setHEADERS(request *structs.Request, req *http.Request) {
 }
 
 func dispatch(resp *http.Response, output *structs.Response) {
-
 	buf := new(bytes.Buffer)
 	io.Copy(buf, resp.Body)
 	resp.Body.Close()

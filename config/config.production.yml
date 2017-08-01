@@ -1,4 +1,8 @@
 appname: archer
 
 db:
-  local: mongodb://localhost 
+  name: archerdb
+  host: "mongo:27017"
+  user: archer
+  pass: "@rch3rp4$$"
+  timeout: 60

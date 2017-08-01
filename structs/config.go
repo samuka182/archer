@@ -14,19 +14,26 @@ import (
 
 //Configurator ...
 type Configurator struct {
-	*Config
+	Environment string
 }
 
 //Config ...
 type Config struct {
-	Environment string
-	ENVPrefix   string
+	APPName string
+
+	DB struct {
+		Name    string `default:"archerdb"`
+		Host    string `default:"localhost:9898"`
+		User    string `default:"archer"`
+		Pass    string `default:"@rch3rp4$$"`
+		Timeout int64  `default:"localhost"`
+	}
 }
 
 // GetEnvironment get environment
 func (configor *Configurator) GetEnvironment() string {
 	if configor.Environment == "" {
-		if env := os.Getenv("CONFIG_ENV"); env != "" {
+		if env := os.Getenv("APP_ENV"); env != "" {
 			return env
 		}
 
@@ -36,25 +43,14 @@ func (configor *Configurator) GetEnvironment() string {
 }
 
 // Load will unmarshal configurations to struct from files that you provide
-func (configor *Configurator) Load(config interface{}, files string) error {
+func (configor *Configurator) Load(config *Config, files string) error {
 	file, _ := configor.getConfigurationFiles(files)
-
 	return processFile(config, file)
 
 }
 
 func (configor *Configurator) getConfigurationFiles(file string) (string, error) {
 	return getConfigurationFileWithENVPrefix(file, configor.GetEnvironment())
-}
-
-func (configor *Configurator) getENVPrefix(config interface{}) string {
-	if configor.Config.ENVPrefix == "" {
-		if prefix := os.Getenv("CONFIG_ENV_PREFIX"); prefix != "" {
-			return prefix
-		}
-		return "config"
-	}
-	return configor.Config.ENVPrefix
 }
 
 func getConfigurationFileWithENVPrefix(file, env string) (string, error) {
@@ -69,12 +65,12 @@ func getConfigurationFileWithENVPrefix(file, env string) (string, error) {
 		envFile = fmt.Sprintf("%v.%v%v", strings.TrimSuffix(file, extname), env, extname)
 	}
 
-	absPath, err := filepath.Abs((os.Getenv("GOPATH") + "/archer/config/" + envFile))
+	absPath, err := filepath.Abs((filepath.Dir(os.Args[0]) + "/../src/archer/config/" + envFile))
 
 	return absPath, err
 }
 
-func processFile(config interface{}, file string) error {
+func processFile(config *Config, file string) error {
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		return err
