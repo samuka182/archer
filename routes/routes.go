@@ -19,4 +19,22 @@ var RoutesArchttp = []structs.Route{
 		"/get",
 		handlers.GetTest,
 	},
+	structs.Route{
+		"CreateArchestration",
+		"POST",
+		"/archestration",
+		handlers.CreateArchestration,
+	},
+	structs.Route{
+		"GetArchestration",
+		"GET",
+		"/archestration/{id}",
+		handlers.GetArchestration,
+	},
+	structs.Route{
+		"GetArchestrations",
+		"GET",
+		"/archestrations",
+		handlers.GetArchestrations,
+	},
 }

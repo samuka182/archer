@@ -23,7 +23,7 @@ type Config struct {
 
 	DB struct {
 		Name    string `default:"archerdb"`
-		Host    string `default:"localhost:9898"`
+		Host    string `default:"localhost:27017"`
 		User    string `default:"archer"`
 		Pass    string `default:"@rch3rp4$$"`
 		Timeout int64  `default:"localhost"`
@@ -37,7 +37,7 @@ func (configor *Configurator) GetEnvironment() string {
 			return env
 		}
 
-		return "development"
+		return "local"
 	}
 	return configor.Environment
 }
