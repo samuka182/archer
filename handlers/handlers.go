@@ -7,9 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gorilla/mux"
 	"github.com/samuka182/archer/archttp"
-	"github.com/samuka182/archer/db"
 	"github.com/samuka182/archer/structs"
 
 	"gopkg.in/mgo.v2/bson"
@@ -28,8 +26,6 @@ func FullRequest(w http.ResponseWriter, r *http.Request) {
 
 	dados.ID = bson.NewObjectId()
 	dados.Timestamp = time.Now()
-
-	db.Save("requests", dados)
 
 	resp, err := archttp.Request(dados)
 	if err != nil {
@@ -51,73 +47,6 @@ func fullDispatch(w http.ResponseWriter, resp *structs.Response, err error) {
 
 	resp.ID = bson.NewObjectId()
 	resp.Timestamp = time.Now()
-
-	db.Save("responses", resp)
-}
-
-//CreateArchestration ...
-func CreateArchestration(w http.ResponseWriter, r *http.Request) {
-	jsonRequest, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-	if err != nil {
-		panic(err)
-	}
-
-	archerstration := &structs.Archerstration{}
-	err = json.Unmarshal(jsonRequest, archerstration)
-
-	archerstration.ID = bson.NewObjectId()
-	archerstration.CreationTime = time.Now()
-
-	err2 := db.Save("archerstrations", archerstration)
-	if err2 != nil {
-		panic(err2)
-	}
-
-}
-
-//GetArchestration ...
-func GetArchestration(w http.ResponseWriter, r *http.Request) {
-
-	id := mux.Vars(r)["id"]
-	archerstration := structs.Archerstration{}
-
-	db.FindByID("archerstrations", id, &archerstration)
-
-	if archerstration.ID == "" {
-		w.WriteHeader(http.StatusNotFound)
-	} else {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-
-		enc := json.NewEncoder(w)
-		err := enc.Encode(archerstration)
-		if err != nil {
-			panic(err)
-		}
-	}
-
-}
-
-//GetArchestrations ...
-func GetArchestrations(w http.ResponseWriter, r *http.Request) {
-
-	archerstrations := []structs.Archerstration{}
-
-	db.FindAll("archerstrations", &archerstrations)
-
-	if archerstrations == nil {
-		w.WriteHeader(http.StatusNotFound)
-	} else {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-
-		enc := json.NewEncoder(w)
-		err := enc.Encode(archerstrations)
-		if err != nil {
-			panic(err)
-		}
-	}
-
 }
 
 //GetTest ...
