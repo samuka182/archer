@@ -1,11 +1,11 @@
 package db
 
 import (
-	"archer/config"
-	"archer/structs"
 	"os"
 	"time"
 
+	"github.com/samuka182/archer/config"
+	"github.com/samuka182/archer/structs"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

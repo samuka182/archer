@@ -1,9 +1,6 @@
 package handlers
 
 import (
-	"archer/archttp"
-	"archer/db"
-	"archer/structs"
 	"encoding/json"
 	"io"
 	"io/ioutil"
@@ -11,6 +8,9 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/samuka182/archer/archttp"
+	"github.com/samuka182/archer/db"
+	"github.com/samuka182/archer/structs"
 
 	"gopkg.in/mgo.v2/bson"
 )

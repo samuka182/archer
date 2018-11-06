@@ -1,10 +1,10 @@
 package util
 
 import (
-	"archer/structs"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/samuka182/archer/structs"
 )
 
 //NewRouter ...

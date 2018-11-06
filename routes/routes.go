@@ -1,8 +1,8 @@
 package routes
 
 import (
-	handlers "archer/handlers"
-	structs "archer/structs"
+	"github.com/samuka182/archer/handlers"
+	"github.com/samuka182/archer/structs"
 )
 
 //RoutesArchttp ...

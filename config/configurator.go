@@ -1,8 +1,6 @@
 package config
 
-import (
-	"archer/structs"
-)
+import "github.com/samuka182/archer/structs"
 
 // New initialize a Configor
 func New() *structs.Configurator {

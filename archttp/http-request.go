@@ -1,7 +1,6 @@
 package archttp
 
 import (
-	"archer/structs"
 	"bytes"
 	"fmt"
 	"io"
@@ -10,6 +9,8 @@ import (
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/samuka182/archer/structs"
 )
 
 //Request ...

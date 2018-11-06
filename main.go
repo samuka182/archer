@@ -1,10 +1,11 @@
 package main
 
 import (
-	"archer/routes"
-	util "archer/utils"
 	"log"
 	"net/http"
+
+	"github.com/samuka182/archer/routes"
+	util "github.com/samuka182/archer/utils"
 )
 
 func main() {
